@@ -1,0 +1,17 @@
+input {
+  @apply w-full block flex-1 border-0 bg-white text-gray-900 placeholder:text-gray-400 fill-none focus:ring-0 sm:text-sm sm:leading-6 outline-none autofill:bg-red-500;
+}
+
+.inputWrapper {
+  @apply mb-2;
+}
+.inputIconWrapper {
+  @apply flex justify-center items-center gap-1 bg-white p-2 rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md;
+}
+
+.inputIconWrapper.error {
+  @apply bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 dark:bg-red-100 dark:border-red-400;
+}
+.inputIconWrapper.success {
+  @apply bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 dark:bg-green-100 dark:border-green-400;
+}
