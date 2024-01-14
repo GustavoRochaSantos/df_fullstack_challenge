@@ -83,6 +83,25 @@ export class UserService {
     }
   }
 
+  async findPhoto(id: string) {
+    try {
+      const record = await this.prisma.user.findFirstOrThrow({
+        where: {
+          id,
+        },
+        select: {
+          photo: true
+        },
+      });
+
+      if (!record) throw new BadRequestException('Record dont exist');
+
+      return record;
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
   async findByLogin(login: string) {
     try {
       return await this.prisma.user.findFirstOrThrow({
@@ -97,6 +116,20 @@ export class UserService {
     try {
       return await this.prisma.user.findFirstOrThrow({
         where: { email },
+      });
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  async updatePhoto(id: string, photo: string) {
+    try {
+      await this.findOne(id);
+
+
+      return await this.prisma.user.update({
+        where: { id },
+        data: { photo },
       });
     } catch (error) {
       throw new HttpException(error.message, 500);

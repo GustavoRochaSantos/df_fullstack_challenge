@@ -17,6 +17,7 @@ model User {
   name     String  @unique
   fullName String
   password String
+  photo    String? 
 
   changedByUser String?
   createdAt     DateTime            @default(now())

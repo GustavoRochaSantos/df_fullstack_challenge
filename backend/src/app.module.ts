@@ -10,12 +10,17 @@ import { AuthGuard } from './auth/auth.guard';
 import { PrismaModule } from 'nestjs-prisma';
 import { PrismaLogMiddleware } from './settings/middleware/prisma.log.middleware';
 import { PrismaSoftDeleteMiddleware } from './settings/middleware/prisma.softdelete.middleware';
+import { PostModule } from './post/post.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       load: [config],
+    }),
+    MulterModule.register({
+      dest: './upload'
     }),
     PrismaModule.forRoot({
       isGlobal: true,
@@ -34,6 +39,7 @@ import { PrismaSoftDeleteMiddleware } from './settings/middleware/prisma.softdel
     }),
     AuthModule,
     UserModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
