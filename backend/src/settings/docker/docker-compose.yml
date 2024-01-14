@@ -1,0 +1,14 @@
+version: '1.0'
+name: dfcom
+services:
+  mysql:
+    image: mysql
+    platform: linux/x86_64
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    restart: always
+    ports:
+      - 3306:3306
+    env_file:
+      - ../../../.env
