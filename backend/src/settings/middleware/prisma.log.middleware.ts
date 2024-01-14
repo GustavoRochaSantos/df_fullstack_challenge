@@ -1,6 +1,4 @@
 import { Logger } from '@nestjs/common';
-import prisma from '../database/prismaService';
-import { log } from 'console';
 const logger = new Logger();
 
 const RequestWithoutLogs = ['ApiLog', 'PrismaLog'];

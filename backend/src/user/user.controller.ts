@@ -72,9 +72,6 @@ export class UserController {
   ): Promise<StreamableFile> {
 
     const record = await this.userService.findPhoto(id)
-    console.log(record)
-    console.log(process.cwd(),)
-    console.log(join(process.cwd(), record.photo))
     const imageLocation = join(process.cwd(), record.photo);
     const file = createReadStream(imageLocation);
     return new StreamableFile(file);

@@ -36,7 +36,7 @@ model User {
 
 model Post {
   id       String  @id @default(uuid())
-  text     String
+  text     String  @db.LongText()
   photo    String?
   comments Int     @default(0)
   likes    Int     @default(0)

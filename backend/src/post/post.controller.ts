@@ -1,12 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, Request, Header, HttpStatus, ParseFilePipeBuilder, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { PostService } from './post.service';
+import { Body, Controller, Delete, Get, Header, HttpStatus, Param, ParseFilePipeBuilder, Patch, Post, Query, Request, StreamableFile, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { createReadStream, createWriteStream, existsSync } from 'fs';
+import { mkdir } from "fs/promises";
+import { join } from 'path';
+import { multerOptions } from 'src/settings/configs/multer';
+import { Readable } from 'stream';
+import { finished } from 'stream/promises';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { join } from 'path';
-import { createReadStream } from 'fs';
-import { multerOptions } from 'src/settings/configs/multer';
+import { PostService } from './post.service';
 
+const imagePath = 'post_photo'
 @Controller('post')
 export class PostController {
   constructor(private readonly postService: PostService) { }
@@ -53,19 +57,36 @@ export class PostController {
   @Header('Content-Type', 'image/jpeg')
   async getUserProfilePhoto(
     @Param('id') id: string,
-  ): Promise<StreamableFile> {
+  ): Promise<StreamableFile | Buffer> {
 
     const record = await this.postService.findPhoto(id)
+    let image = ''
 
-    const imageLocation = join(process.cwd(), record.photo);
-    const file = createReadStream(imageLocation);
+    if (record.photo.includes(imagePath)) {
+      image = join(process.cwd(), record.photo)
+
+    } else {
+
+      const res = await fetch(record.photo);
+      if (!existsSync("downloads")) {
+        await mkdir("downloads")
+      }
+      const fileName = `${crypto.randomUUID()}.jpg`
+      const destination = join(process.cwd(), "./downloads", fileName);
+
+      const fileStream = createWriteStream(destination, { flags: 'wx' });
+      // @ts-ignore
+      await finished(Readable.fromWeb(res.body).pipe(fileStream))
+
+      image = join(process.cwd(), "downloads", fileName)
+    }
+
+    const file = createReadStream(image);
     return new StreamableFile(file);
   }
 
-
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    console.log('dentro', updatePostDto)
     return this.postService.update(id, updatePostDto);
   }
 

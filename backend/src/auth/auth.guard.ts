@@ -34,7 +34,6 @@ export class AuthGuard implements CanActivate {
       });
       request['user'] = payload;
       request.body.changedByUser = payload.sub;
-      console.log('fora', request.body)
     } catch (error) {
       throw new UnauthorizedException();
     }

@@ -95,7 +95,6 @@ export class PostCommentService {
 
       return await this.prisma.$transaction(async (tx) => {
         await this.prisma.postComment.update({ where: { id }, data: softDeleteData });
-        console.log()
         await this.prisma.post.update({
           where: { id: record.postId },
           data: {
