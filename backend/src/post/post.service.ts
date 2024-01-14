@@ -66,6 +66,39 @@ export class PostService {
     }
   }
 
+  async findPhoto(id: string) {
+    try {
+      const record = await this.prisma.post.findFirstOrThrow({
+        where: {
+          id,
+        },
+        select: {
+          photo: true
+        },
+      });
+
+      if (!record) throw new BadRequestException('Record dont exist');
+
+      return record;
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  async updatePhoto(id: string, photo: string) {
+    try {
+      await this.findOne(id);
+
+
+      return await this.prisma.post.update({
+        where: { id },
+        data: { photo },
+      });
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
   async update(id: string, data: UpdatePostDto) {
     try {
       await this.findOne(id);

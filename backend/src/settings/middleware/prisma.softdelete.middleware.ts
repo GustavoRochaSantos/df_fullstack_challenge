@@ -8,7 +8,11 @@ const findMethods = [
   'findUnique',
   'findUniqueOrThrow',
 ];
+
 export async function PrismaSoftDeleteMiddleware(params, next) {
+  console.log('prisma', params)
+  if (params.action === 'create') {
+  }
   if (findMethods.includes(params.action)) {
     if (!params.args.where) {
       params.args.where = {};

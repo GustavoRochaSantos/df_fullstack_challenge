@@ -83,24 +83,6 @@ export class UserService {
     }
   }
 
-  async findPhoto(id: string) {
-    try {
-      const record = await this.prisma.user.findFirstOrThrow({
-        where: {
-          id,
-        },
-        select: {
-          photo: true
-        },
-      });
-
-      if (!record) throw new BadRequestException('Record dont exist');
-
-      return record;
-    } catch (error) {
-      throw new HttpException(error.message, 500);
-    }
-  }
 
   async findByLogin(login: string) {
     try {
@@ -117,6 +99,25 @@ export class UserService {
       return await this.prisma.user.findFirstOrThrow({
         where: { email },
       });
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+  async findPhoto(id: string) {
+    try {
+      const record = await this.prisma.user.findFirstOrThrow({
+        where: {
+          id,
+        },
+        select: {
+          photo: true
+        },
+      });
+
+      if (!record) throw new BadRequestException('Record dont exist');
+
+      return record;
     } catch (error) {
       throw new HttpException(error.message, 500);
     }

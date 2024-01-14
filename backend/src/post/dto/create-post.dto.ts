@@ -24,4 +24,7 @@ export class CreatePostDto {
   @IsInt()
   views: number;
 
+  @IsOptional()
+  @IsString()
+  changedByUser: string
 }

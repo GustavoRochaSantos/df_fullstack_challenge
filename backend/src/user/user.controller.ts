@@ -33,6 +33,16 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
+  @Get()
+  findAll(@Query() query) {
+    return this.userService.findAll(query);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.userService.findOne(id);
+  }
+
   @Post('upload/:id')
   @UseInterceptors(FileInterceptor('file', multerOptions('user_photo')))
   uploadFile(
@@ -54,10 +64,6 @@ export class UserController {
     return this.userService.updatePhoto(id, file.path)
   }
 
-  @Get()
-  findAll(@Query() query) {
-    return this.userService.findAll(query);
-  }
 
   @Get('profile-photo/:id')
   @Header('Content-Type', 'image/jpeg')
@@ -74,10 +80,6 @@ export class UserController {
     return new StreamableFile(file);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(id);
-  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

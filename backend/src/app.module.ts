@@ -15,6 +15,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { PostLikeModule } from './post-like/post-like.module';
 import { PostViewModule } from './post-view/post-view.module';
 import { PostRepostModule } from './post-repost/post-repost.module';
+import { PostCommentModule } from './post-comment/post-comment.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { PostRepostModule } from './post-repost/post-repost.module';
     PostLikeModule,
     PostViewModule,
     PostRepostModule,
+    PostCommentModule,
   ],
   controllers: [AppController],
   providers: [AppService, {

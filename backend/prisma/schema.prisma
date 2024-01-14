@@ -58,7 +58,7 @@ model Post {
   PostRepost  PostRepost[]
   PostView    PostView[]
 
-  @@map("Post")
+  @@map("post")
 }
 
 model PostLike {
@@ -107,16 +107,20 @@ model PostView {
 }
 
 model PostComment {
-  id              String       @id @default(uuid())
+  id   String @id @default(uuid())
+  text String
+
+  changedByUser String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  isDeleted     Boolean   @default(false)
+  isActive      Boolean   @default(true)
+
   post            Post         @relation(fields: [postId], references: [id])
   postId          String
   replayCommentId String?
   replayComment   PostComment? @relation("postReplay", fields: [replayCommentId], references: [id])
-
-  createdAt DateTime  @default(now())
-  deletedAt DateTime?
-  isDeleted Boolean   @default(false)
-  isActive  Boolean   @default(true)
 
   User        User?         @relation(fields: [userId], references: [id])
   userId      String?
