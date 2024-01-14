@@ -24,6 +24,8 @@ const config: Config = {
       textFill: ["autofill"],
     },
   },
-  plugins: [require("tailwindcss-autofill")],
+  plugins: [
+    require("tailwindcss-autofill"),
+  ],
 }
 export default config

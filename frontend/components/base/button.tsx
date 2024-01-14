@@ -17,11 +17,15 @@ const Button = ({
   iconPosition = "before",
   loading = false,
   fullSize,
+  className,
   ...props
 }: Params) => {
   const baseButton = (children: React.ReactNode) => {
     return (
-      <button className={`btn ${type} ${fullSize && "w-full"}`} {...props}>
+      <button
+        className={`btn ${type} ${fullSize && "w-full"} ${className}`}
+        {...props}
+      >
         {children}
       </button>
     );

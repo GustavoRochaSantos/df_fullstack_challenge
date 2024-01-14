@@ -1,0 +1,6 @@
+.card-gray {
+  @apply bg-gray-100 rounded-lg p-5;
+}
+h3 {
+  @apply font-bold;
+}

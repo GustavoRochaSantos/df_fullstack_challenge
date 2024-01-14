@@ -7,9 +7,14 @@ interface Params extends InputHTMLAttributes<HTMLInputElement> {
   iconPosition?: "after" | "before";
   error?: string;
   success?: boolean;
+  fullSize?: boolean;
 }
 
-const Input = ({ iconPosition = "before", ...props }: Params) => {
+const Input = ({
+  iconPosition = "before",
+  fullSize = false,
+  ...props
+}: Params) => {
   const defaultPlaceholder = () => {
     if (props.placeholder) {
       return props.placeholder;
@@ -22,7 +27,7 @@ const Input = ({ iconPosition = "before", ...props }: Params) => {
   };
 
   return (
-    <div className="inputWrapper">
+    <div className={`inputWrapper ${fullSize && "w-full"}`}>
       {props.label && (
         <label
           htmlFor={props.id}
@@ -33,14 +38,14 @@ const Input = ({ iconPosition = "before", ...props }: Params) => {
       )}
       <div
         data-test={`input-${props.id}`}
-        className={`inputIconWrapper ${props.error && "error"} ${
-          props.success && "success"
-        }`}
+        className={`inputIconWrapper ${props.error ? "error" : ""} 
+                  ${props.success ? "success" : ""}`}
       >
         {props.icon && iconPosition === "before" && props.icon}
         <input
           type={props.type}
           placeholder={defaultPlaceholder()}
+          className={``}
           {...props}
         />
         {props.icon && iconPosition === "after" && props.icon}

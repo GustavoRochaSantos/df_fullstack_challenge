@@ -1,0 +1,11 @@
+.h3 {
+  @apply font-bold text-lg;
+}
+
+article {
+  @apply text-sm;
+}
+
+.text-gray-small {
+  @apply text-gray-700 text-sm font-thin;
+}

@@ -1,14 +1,11 @@
 .btn {
-  @apply flex justify-center items-center gap-2 h-9 mr-4 rounded-lg bg-blue-500 py-2 px-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
+  @apply flex justify-center items-center gap-2 h-9 mr-4 rounded-2xl bg-blue-400 py-2 px-3 font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none;
 }
 
 .btn.secondary {
-  @apply py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700;
+  @apply py-2.5 px-5 me-2 mb-2 text-sm font-medium focus:outline-none bg-black rounded-lg border border-gray-200
+   hover:bg-black/90  focus:z-10 focus:ring-4 focus:ring-gray-800  hover:shadow-black/20
+   dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700;
 }
 
 .btn.danger {

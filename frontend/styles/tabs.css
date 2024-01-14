@@ -1,0 +1,17 @@
+.tabWrapper {
+  @apply py-1 w-[600px];
+}
+.tabTitleWrapper {
+  @apply flex justify-between items-center border-gray-100 border-b-2;
+}
+
+.tabTitle {
+  @apply text-lg font-bold w-1/2 flex justify-center items-center;
+}
+
+.tabActive {
+  @apply border-b-2 border-blue-400;
+}
+.tabContent {
+  @apply p-2;
+}
