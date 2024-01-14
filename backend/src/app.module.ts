@@ -16,6 +16,7 @@ import { PostLikeModule } from './post-like/post-like.module';
 import { PostViewModule } from './post-view/post-view.module';
 import { PostRepostModule } from './post-repost/post-repost.module';
 import { PostCommentModule } from './post-comment/post-comment.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { PostCommentModule } from './post-comment/post-comment.module';
         },
       },
     }),
+    HealthModule,
     AuthModule,
     UserModule,
     PostModule,
