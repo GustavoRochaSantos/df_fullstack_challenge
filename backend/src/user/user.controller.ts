@@ -1,29 +1,27 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
-  Req,
-  UseInterceptors,
-  UploadedFile,
-  ParseFilePipeBuilder,
+  Get,
+  Header,
   HttpStatus,
+  Param,
+  ParseFilePipeBuilder,
+  Patch,
+  Post,
+  Query,
   StreamableFile,
-  Response,
-  Header
+  UploadedFile,
+  UseInterceptors
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { Public } from 'src/auth/setMetadata';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/settings/configs/multer';
 import { createReadStream } from 'fs';
 import { join } from 'path';
+import { Public } from 'src/auth/setMetadata';
+import { multerOptions } from 'src/settings/configs/multer';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
@@ -65,7 +63,6 @@ export class UserController {
   @Header('Content-Type', 'image/jpeg')
   async getUserProfilePhoto(
     @Param('id') id: string,
-    @Response({ passthrough: true }) res: Response
   ): Promise<StreamableFile> {
 
     const record = await this.userService.findPhoto(id)
@@ -88,7 +85,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string, @Req() req) {
+  remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }
 }

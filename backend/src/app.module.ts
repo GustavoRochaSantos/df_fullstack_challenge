@@ -12,6 +12,9 @@ import { PrismaLogMiddleware } from './settings/middleware/prisma.log.middleware
 import { PrismaSoftDeleteMiddleware } from './settings/middleware/prisma.softdelete.middleware';
 import { PostModule } from './post/post.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { PostLikeModule } from './post-like/post-like.module';
+import { PostViewModule } from './post-view/post-view.module';
+import { PostRepostModule } from './post-repost/post-repost.module';
 
 @Module({
   imports: [
@@ -40,6 +43,9 @@ import { MulterModule } from '@nestjs/platform-express';
     AuthModule,
     UserModule,
     PostModule,
+    PostLikeModule,
+    PostViewModule,
+    PostRepostModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
