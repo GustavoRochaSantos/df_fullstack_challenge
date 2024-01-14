@@ -64,6 +64,6 @@ async function bootstrap() {
     app.use(helmet());
   }
 
-  await app.listen(process.env.PORT || nestConfig.port || 3000);
+  await app.listen(process.env.PORT || nestConfig.port || 3001);
 }
 bootstrap();

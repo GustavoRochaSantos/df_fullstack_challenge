@@ -20,13 +20,6 @@ export interface SwaggerConfig {
   path: string;
 }
 
-export interface GraphqlConfig {
-  playgroundEnabled: boolean;
-  debug: boolean;
-  schemaDestination: string;
-  sortSchema: boolean;
-}
-
 export interface SecurityConfig {
   expiresIn: string;
   refreshIn: string;
@@ -43,7 +36,7 @@ export interface Config {
 
 const config: Config = {
   nest: {
-    port: 3000,
+    port: 3001,
   },
   helmet: {
     enabled: true,
@@ -51,7 +44,7 @@ const config: Config = {
   cors: {
     enabled: true,
     methods: ['GET', 'POST', 'PATH', 'DELETE'],
-    origin: [process.env.CORS_WEB_URL || 'http://localhost:3001'],
+    origin: [process.env.CORS_WEB_URL || 'http://localhost:3000'],
   },
   swagger: {
     enabled: true,
