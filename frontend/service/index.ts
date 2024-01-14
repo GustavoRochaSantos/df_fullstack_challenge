@@ -1,0 +1,7 @@
+export { default as AuthService } from './auth'
+export { default as UserService } from './user'
+export { default as PostService } from './post'
+export { default as PostCommentService } from './postComment'
+export { default as PostLikeService } from './postLike'
+export { default as PostRepostService } from './postRepost'
+export { default as PostViewService } from './postView'
