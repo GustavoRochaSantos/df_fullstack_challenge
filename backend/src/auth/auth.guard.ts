@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
-    console.log(request)
     const token = request.cookies?.access_token;
     if (!token) {
       throw new ForbiddenException('Login expirado!');
@@ -35,9 +34,7 @@ export class AuthGuard implements CanActivate {
       });
       request['user'] = payload;
       request.body.changedByUser = payload.sub;
-      console.log('AUTH', request.body);
     } catch (error) {
-      console.log(error);
       throw new UnauthorizedException();
     }
     return true;

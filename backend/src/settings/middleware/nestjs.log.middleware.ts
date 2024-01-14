@@ -9,7 +9,6 @@ export async function NestJSLogMiddleware(
   next: NextFunction,
 ) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  console.log(req.method, req.body);
   if (req.url.indexOf('logs') !== -1 || process.env.API_LOG !== 'true') {
     next();
     return;

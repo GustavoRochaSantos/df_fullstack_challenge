@@ -42,7 +42,6 @@ export class AuthService {
       secret: process.env.JWT_RT_SECRET,
       expiresIn: process.env.JWT_RT_EXPIRESIN || '7d',
     });
-    console.log(accessToken, refreshToken)
     return { access_token: accessToken, refresh_token: refreshToken };
   }
 
@@ -82,7 +81,6 @@ export class AuthService {
 
       return await this.generateTokens(payload);
     } catch (error) {
-      console.log(error);
       throw new UnauthorizedException();
     }
   }
