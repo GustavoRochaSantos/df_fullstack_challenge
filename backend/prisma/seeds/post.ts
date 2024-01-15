@@ -15,13 +15,14 @@ export async function post_seed(
 
   for (let x = 1; x <= Math.random() * 20; x++) {
     const data = {
-      text: faker.lorem.paragraphs(),
+      text: faker.lorem.words({ min: 1, max: 15 }),
       changedByUser,
       comments: 0,
       likes: 0,
       reposts: 0,
       views: 0,
-      photo: null
+      photo: null,
+      createdAt: faker.date.between({ from: '2024-01-01T00:00:00.000Z', to: new Date() })
     };
 
     const record = await postService.create(changedByUser, data);

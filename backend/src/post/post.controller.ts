@@ -9,6 +9,7 @@ import { finished } from 'stream/promises';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostService } from './post.service';
+import { Public } from 'src/auth/setMetadata';
 
 const imagePath = 'post_photo'
 @Controller('post')
@@ -20,8 +21,9 @@ export class PostController {
     return this.postService.create(req.user.sub, createPostDto);
   }
 
+  @Public()
   @Get()
-  findAll(@Query() query) {
+  findAll(@Query() query: string) {
     return this.postService.findAll(query);
   }
 

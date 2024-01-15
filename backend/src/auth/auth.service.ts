@@ -14,23 +14,6 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
   constructor(private usersService: UserService, private jwt: JwtService) { }
 
-  async setTokensOnRequest(response: Response, tokens: Record<string, string>) {
-    const token_expiresIn =
-      parseInt(process.env.JWT_TK_EXPIRESIN.replace(/\D/gm, '')) || 15;
-    const refresh_token_expiresIn =
-      parseInt(process.env.JWT_RT_EXPIRESIN.replace(/\D/gm, '')) || 7;
-
-    response.cookie('access_token', tokens.access_token, {
-      expires: dayjs().add(token_expiresIn, 'minutes').toDate(),
-      httpOnly: true,
-      secure: true,
-    });
-    response.cookie('refresh_token', tokens.refresh_token, {
-      expires: dayjs().add(refresh_token_expiresIn, 'days').toDate(),
-      httpOnly: true,
-      secure: true,
-    });
-  }
 
   private async generateTokens(payload: Record<string, string>) {
     const accessToken = this.jwt.sign(payload, {
@@ -58,7 +41,8 @@ export class AuthService {
       }
 
       const payload = {
-        name: user.fullName,
+        fullName: user.fullName,
+        name: user.name,
         email: user.email,
         sub: user.id,
       };
@@ -71,6 +55,7 @@ export class AuthService {
 
   async refreshToken(refresh_token: string): Promise<any> {
     if (!refresh_token) {
+      console.log('SERVICE', refresh_token)
       throw new ForbiddenException('Login expirado!');
     }
 

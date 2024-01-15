@@ -14,6 +14,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { UserSignInDto } from './dto/UserSignIn.dto';
 import { Public } from './setMetadata';
+import { RefreshTokenDto } from './dto/RefreshToken.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -26,26 +27,23 @@ export class AuthController {
     @Body() signInDto: UserSignInDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const tokens = await this.authService.signIn(
+    return await this.authService.signIn(
       signInDto.login,
       signInDto.password,
     );
 
-    await this.authService.setTokensOnRequest(response, tokens);
-
-    return;
   }
 
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('refreshToken')
   async refreshToken(
-    @Req() req,
+    @Body() refreshTokenDto: RefreshTokenDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const tokens = await this.authService.refreshToken(req.cookies.refresh_token);
+    console.log('CONTROLER', refreshTokenDto)
+    return await this.authService.refreshToken(refreshTokenDto.refresh_token);
 
-    return await this.authService.setTokensOnRequest(response, tokens);
   }
   @UseGuards(AuthGuard)
   @Get('profile')

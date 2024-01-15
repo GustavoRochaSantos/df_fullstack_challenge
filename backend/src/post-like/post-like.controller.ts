@@ -10,6 +10,7 @@ export class PostLikeController {
     return this.postLikeService.create(req.user.sub, postId);
   }
 
+
   @Get(':postId')
   findAll(@Query() query, @Param('postId') postId) {
     return this.postLikeService.findAll(postId, query);

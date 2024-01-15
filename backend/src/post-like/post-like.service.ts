@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { PaginatedResult, paginate, sortBuilder, whereBuilder } from 'src/settings/database/queries';
 import { PostLike } from './entities/post-like.entity';
@@ -11,11 +11,29 @@ export class PostLikeService {
   async create(likedByUserId: string, postId: string) {
     try {
       return await this.prisma.$transaction(async (tx) => {
-        await this.prisma.postLike.create({
-          data: {
+        const recordExist = await this.prisma.postLike.findFirst({
+          where: {
             likedByUserId, postId
-          },
-        });
+          }
+        })
+
+        if (recordExist) {
+          await this.prisma.postLike.delete({
+            where: {
+              postId_likedByUserId: {
+                likedByUserId, postId
+              }
+            }
+          });
+        } else {
+          await this.prisma.postLike.create({
+            data: {
+              likedByUserId, postId
+            },
+          });
+
+        }
+
 
         await this.prisma.post.update({
           where: { id: postId },
@@ -24,6 +42,23 @@ export class PostLikeService {
           }
         })
       });
+    } catch (error) {
+      throw new HttpException(error.message, 500);
+    }
+  }
+
+
+  async findOne(likedByUserId: string, postId: string) {
+    try {
+      const record = await this.prisma.postLike.findFirstOrThrow({
+        where: {
+          likedByUserId, postId,
+        },
+      });
+
+      if (!record) throw new BadRequestException('Record dont exist');
+
+      return record;
     } catch (error) {
       throw new HttpException(error.message, 500);
     }

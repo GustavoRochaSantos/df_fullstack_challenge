@@ -11,6 +11,7 @@ export class PostViewService {
   async create(viewedByUserId: string, postId: string) {
     try {
       return await this.prisma.$transaction(async (tx) => {
+
         await this.prisma.postView.create({
           data: {
             viewedByUserId, postId
