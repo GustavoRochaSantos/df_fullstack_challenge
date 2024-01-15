@@ -17,10 +17,10 @@ const Avatar = ({
   return (
     <Image
       src={src}
-      width={width}
-      height={height}
+      width={50}
+      height={50}
       alt={alt}
-      className="rounded-full"
+      className="rounded-full h-[50px]"
     />
   );
 };

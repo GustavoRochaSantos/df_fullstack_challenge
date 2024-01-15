@@ -1,22 +1,30 @@
+import React from "react"
 import { GetAllResponse, api } from "./baseApi"
 
 const resource = 'post'
 
-interface Post {
-  id: string,
+export interface Post {
+  id?: string,
   text: string,
   photo?: string,
   comments?: number,
   likes?: number,
   reposts?: number,
   views?: number,
-  userId: string
+  userId?: string
   changedByUser?: string,
-  createdAt?: Date,
-  updatedAt?: Date,
-  deletedAt?: Date,
+  createdAt?: string,
+  updatedAt?: string,
+  deletedAt?: string,
   isDeleted?: boolean,
   isActive?: boolean,
+  isLikedByYou?: boolean
+  User?: {
+    id: string,
+    name: string,
+    fullName: string,
+    photo: string | undefined
+  }
 }
 
 const create = async (data: Post): Promise<Post> => {
@@ -44,8 +52,8 @@ const findPhoto = async (id: string): Promise<GetAllResponse> => {
   return response.data
 }
 
-const update = async (id: string, data: Post): Promise<Post> => {
-  const response = await api.put(`${resource}/${id}`, data)
+const update = async (data: Post): Promise<Post> => {
+  const response = await api.patch(`${resource}/${data.id}`, data)
   return response.data
 }
 

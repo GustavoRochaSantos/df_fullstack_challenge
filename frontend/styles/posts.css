@@ -1,0 +1,7 @@
+.post-wrapper {
+  @apply border-b-2 border-gray-100 pb-4 mb-2;
+}
+
+.post-info-detail {
+  @apply flex items-center gap-3 text-gray-500;
+}

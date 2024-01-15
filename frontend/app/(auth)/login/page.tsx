@@ -16,13 +16,11 @@ const LoginPage = ({}: Params) => {
           icon={<User size={24} color="gray" />}
           type="email"
           required
-          error={"vsad"}
         />
         <Input
           id="password"
           icon={<LockKey size={24} color="gray" />}
           type="password"
-          success
           required
         />
         <div className="flex justify-between gap-2 mb-2">

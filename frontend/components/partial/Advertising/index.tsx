@@ -6,7 +6,7 @@ import NewsSection from "./news";
 
 const AdvertisingSection = () => {
   return (
-    <section className="flex flex-col w-96 gap-5 pt-3 pl-3 border-l-2 border-gray-100 hidden lg:block">
+    <section className="lg:flex flex-col w-96 gap-5 pt-3 pl-3 border-l-2 border-gray-100 hidden lg:block">
       <Input
         id="search-menu"
         type="search"

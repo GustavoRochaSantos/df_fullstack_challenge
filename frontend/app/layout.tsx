@@ -1,6 +1,7 @@
 import { AdvertisingSection, SideMenu } from "@/components";
 import type { Metadata } from "next";
 import "../styles/globals.css";
+import Provider from "@/util/Providers";
 
 export const metadata: Metadata = {
   title: "DFCom Fullstack Challenge",
@@ -15,15 +16,17 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className="h-full flex flex-col items-center ">
-          <div className="flex h-full">
-            <SideMenu />
-            <div className="flex ">
-              <main className="grow">{children}</main>
-              <AdvertisingSection />
+        <Provider>
+          <div className="h-full flex flex-col items-center ">
+            <div className="flex h-full">
+              <SideMenu />
+              <div className="flex ">
+                <main className="grow">{children}</main>
+                <AdvertisingSection />
+              </div>
             </div>
           </div>
-        </div>
+        </Provider>
       </body>
     </html>
   );

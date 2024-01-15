@@ -1,6 +1,6 @@
 "use client";
 import { Avatar, Button } from "@/components";
-import { useSideMenuStore } from "@/store";
+import { useSideMenuStore, useUserStore } from "@/store";
 import {
   Bell,
   DotsThreeCircle,
@@ -14,7 +14,9 @@ import {
   X,
 } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import Modal from "../modal";
+import Login from "@/components/partial/Auth/Login";
 
 interface Data {
   title: string;
@@ -24,7 +26,7 @@ interface Data {
 }
 const SideMenu = () => {
   const isOpen = useSideMenuStore((state) => state.isOpen);
-
+  const user = useUserStore((state) => state);
   const data: Data[] = [
     {
       title: "Página Inicial",
@@ -78,6 +80,10 @@ const SideMenu = () => {
     },
   ];
 
+  const handleLogin = () => {
+    user.loginModalToggle();
+  };
+
   return (
     <aside
       className={`w-[60] lg:w-64 h-full p-4 border-r-[1px] border-gray-100  invisible sm:visible transition-all ease-in-out duration-200  ${
@@ -98,18 +104,25 @@ const SideMenu = () => {
               </div>
             </Link>
           ))}
-          <Button fullSize className="hidden lg:block">
-            Postar
-          </Button>
+          {!user.id && (
+            <Button fullSize className="hidden lg:block" onClick={handleLogin}>
+              Login
+            </Button>
+          )}
         </ul>
-        <div className="flex gap-2 mb-5">
-          <Avatar />
-          <div className="hidden lg:block">
-            <div>Gustavo Rocha</div>
-            <div>@12345</div>
+        {user.id && (
+          <div className="flex gap-2 mb-5">
+            <Avatar src={user.photo} />
+            <div className="hidden lg:block">
+              <div>{user.fullName}</div>
+              <div>{user.name}</div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
+      <Modal isOpen={user.loginModalIsOpen}>
+        <Login />
+      </Modal>
     </aside>
   );
 };

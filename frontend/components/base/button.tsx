@@ -2,7 +2,7 @@ import { Spinner } from "@phosphor-icons/react/dist/ssr";
 import React, { ButtonHTMLAttributes } from "react";
 
 interface Params extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-  type?: "primary" | "secondary" | "ghost" | "danger";
+  type?: "primary" | "secondary" | "ghost" | "danger" | "submit";
   children: React.ReactNode;
   icon?: React.ReactNode;
   iconPosition?: "after" | "before";
