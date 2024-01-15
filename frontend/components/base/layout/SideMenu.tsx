@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, Button } from "@/components";
+import { Avatar, Button, NewPostSection } from "@/components";
 import { useSideMenuStore, useUserStore } from "@/store";
 import {
   Bell,
@@ -17,6 +17,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Modal from "../modal";
 import Login from "@/components/partial/Auth/Login";
+import useModalStore from "@/store/modals";
 
 interface Data {
   title: string;
@@ -27,6 +28,8 @@ interface Data {
 const SideMenu = () => {
   const isOpen = useSideMenuStore((state) => state.isOpen);
   const user = useUserStore((state) => state);
+  const modal = useModalStore((state) => state);
+
   const data: Data[] = [
     {
       title: "Página Inicial",
@@ -81,7 +84,11 @@ const SideMenu = () => {
   ];
 
   const handleLogin = () => {
-    user.loginModalToggle();
+    modal.toggle("login");
+  };
+
+  const handlePost = () => {
+    modal.toggle("post");
   };
 
   return (
@@ -109,6 +116,11 @@ const SideMenu = () => {
               Login
             </Button>
           )}
+          {user.id && (
+            <Button fullSize className="hidden lg:block" onClick={handlePost}>
+              Postar
+            </Button>
+          )}
         </ul>
         {user.id && (
           <div className="flex gap-2 mb-5">
@@ -120,8 +132,11 @@ const SideMenu = () => {
           </div>
         )}
       </div>
-      <Modal isOpen={user.loginModalIsOpen}>
+      <Modal modalName={"login"} isOpen={modal.pages["login"]}>
         <Login />
+      </Modal>
+      <Modal modalName={"post"} isOpen={modal.pages["post"]}>
+        <NewPostSection />
       </Modal>
     </aside>
   );

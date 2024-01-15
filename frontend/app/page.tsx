@@ -1,5 +1,5 @@
 "use client";
-import { NewPostSection, PostsListSection, Tabs } from "@/components";
+import { PostsListSection, Tabs } from "@/components";
 import { useUserStore } from "@/store";
 import { useEffect } from "react";
 
@@ -16,7 +16,6 @@ export default function Home() {
             title: "Pra você",
             content: (
               <>
-                <NewPostSection />
                 <PostsListSection />
               </>
             ),

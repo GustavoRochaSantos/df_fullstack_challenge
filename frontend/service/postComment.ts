@@ -2,10 +2,10 @@ import { GetAllResponse, api } from "./baseApi"
 
 const resource = 'post-comment'
 
-interface PostComment {
-  id: string,
+export interface PostComment {
+  id?: string,
   text: string,
-  userId: string
+  userId?: string
   postId: string,
   replayCommentId?: string,
   changedByUser?: string,
@@ -21,8 +21,8 @@ const create = async (data: PostComment): Promise<PostComment> => {
   return response.data
 }
 
-const findAll = async (): Promise<GetAllResponse> => {
-  const response = await api.get(resource)
+const findAll = async (query: string): Promise<GetAllResponse> => {
+  const response = await api.get(`${resource}?${query}`)
   return response.data
 }
 

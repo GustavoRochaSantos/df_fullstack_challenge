@@ -5,6 +5,7 @@ import { PostComment } from './entities/post-comment.entity';
 import { PaginatedResult, paginate, sortBuilder, whereBuilder } from 'src/settings/database/queries';
 import { PrismaService } from 'nestjs-prisma';
 import { softDeleteData } from 'src/settings/utils/softdelete';
+import { convertDatesFromObject } from 'src/settings/utils';
 
 @Injectable()
 export class PostCommentService {
@@ -39,6 +40,7 @@ export class PostCommentService {
       perPage = 10,
       sortField = 'createdAt',
       sortOrder = 'desc',
+      postId,
       ...props
     } = query;
 
@@ -47,11 +49,18 @@ export class PostCommentService {
         this.prisma.postComment,
         {
           orderBy: sortBuilder(sortField, sortOrder),
-          where: whereBuilder(props),
+          where: {
+            postId,
+            ...whereBuilder(props)
+          },
+          include: {
+            User: true
+          }
         },
         {
           page,
           perPage,
+          customData: convertDatesFromObject
         },
       );
     } catch (error) {
@@ -65,6 +74,9 @@ export class PostCommentService {
         where: {
           id,
         },
+        include: {
+          User: true
+        }
       });
 
       if (!record) throw new BadRequestException('Record dont exist');

@@ -2,6 +2,7 @@
 import { Avatar, Button, TextArea } from "@/components";
 import { PostService } from "@/service";
 import { useUserStore } from "@/store";
+import useModalStore from "@/store/modals";
 import { queryClient } from "@/util/Providers";
 import {
   CalendarBlank,
@@ -23,6 +24,7 @@ interface Params {
 const NewPostSection = (data: Params) => {
   const [text, setText] = useState(data.text || "");
 
+  const modal = useModalStore((state) => state);
   const user = useUserStore((state) => state);
 
   const invalidateCache = () => {
@@ -35,6 +37,7 @@ const NewPostSection = (data: Params) => {
       queryKey: ["posts"],
     });
   };
+
   const { mutate: CreateMutation, isPending: createIsLoading } = useMutation({
     mutationFn: PostService.create,
     onSuccess: invalidateCache,
@@ -63,12 +66,16 @@ const NewPostSection = (data: Params) => {
     }
   };
 
+  const handleClose = () => {
+    modal.toggle("post");
+  };
+
   if (!user.id) {
     return;
   }
 
   return (
-    <div id="new-post-wrapper" className="border-b-2 border-gray-100 py-2 mb-2">
+    <div id="new-post-wrapper" className="min-w-[500px]">
       <div className="flex gap-3 mb-3">
         <div>
           <Avatar src={user.photo} />
@@ -90,12 +97,19 @@ const NewPostSection = (data: Params) => {
           <CalendarBlank size={18} className="text-blue-400" />
           <MapPin size={18} className="text-blue-400" />
         </div>
-        <Button
-          onClick={handleSubmit}
-          loading={createIsLoading || updateIsLoading}
-        >
-          Postar
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            onClick={handleSubmit}
+            loading={createIsLoading || updateIsLoading}
+          >
+            Postar
+          </Button>
+          {modal.pages["post"] && (
+            <Button type="secondary" onClick={handleClose}>
+              Cancelar
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { Button, Checkbox, Input } from "@/components";
 import { AuthService } from "@/service";
 import { MutationError } from "@/service/baseApi";
 import { useUserStore } from "@/store";
+import useModalStore from "@/store/modals";
 import { LockKey, User } from "@phosphor-icons/react/dist/ssr";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
@@ -15,6 +16,7 @@ const Login = () => {
   const [inputLogin, setInputLogin] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
   const [error, setError] = useState<string | undefined>(undefined);
+  const modal = useModalStore((state) => state);
 
   const { loginModalToggle, setLogin } = useUserStore((state) => state);
 
@@ -34,7 +36,7 @@ const Login = () => {
     onSuccess: (data, variables, context) => {
       localStorage.setItem("tokens", JSON.stringify(data));
       meMutate.mutate();
-      loginModalToggle();
+      modal.toggle("login");
     },
     onError: (error: MutationError) => {
       if (error.response.data.statusCode === 401) {
@@ -49,10 +51,10 @@ const Login = () => {
   };
 
   const handleCancel = () => {
-    loginModalToggle();
+    modal.toggle("login");
   };
   return (
-    <div className="bg-white border-2 rounded-lg p-10">
+    <div>
       <h1 className="font-bold ">Bem vindo novamente!</h1>
       <h4>Estavamos com saudades </h4>
       <form className="w-72 pt-5" onSubmit={handleSubmit}>

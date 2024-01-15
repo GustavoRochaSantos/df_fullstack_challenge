@@ -83,6 +83,7 @@ export class PostService {
         {
           page,
           perPage,
+          customData: convertDatesFromObject
         },
       );
 

@@ -37,7 +37,7 @@ export const api = axios.create({
 
 
 api.interceptors.request.use(config => {
-  console.log(config.url, config.data)
+  console.log(config.url, config.method, config.data)
   if (!config.url?.includes('login')) {
 
     const tokens = JSON.parse(localStorage.getItem('tokens') || "")
@@ -48,7 +48,7 @@ api.interceptors.request.use(config => {
 })
 
 api.interceptors.response.use((res) => {
-  console.log(res.status, res.data)
+  console.log(res.status, res.data, res.statusText)
 
   return res
 },

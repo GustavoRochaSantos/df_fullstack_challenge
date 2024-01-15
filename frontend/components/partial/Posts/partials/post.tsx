@@ -1,7 +1,9 @@
 "use client";
 import { Avatar, Button, NewPostSection } from "@/components";
+import { PostLikeService } from "@/service";
 import { Post } from "@/service/post";
 import { useUserStore } from "@/store";
+import { queryClient } from "@/util/Providers";
 import {
   ArrowsClockwise,
   BookmarkSimple,
@@ -12,18 +14,20 @@ import {
   SealCheck,
   ShareNetwork,
 } from "@phosphor-icons/react/dist/ssr";
-import { useState } from "react";
-import LikeMutations from "@/mutation/postLike";
 import { useMutation } from "@tanstack/react-query";
-import { PostLikeService } from "@/service";
-import { queryClient } from "@/util/Providers";
-import InfoIcon from "./components/infoIcon";
+import { useState } from "react";
+import InfoIcon from "../components/infoIcon";
+import Modal from "@/components/base/modal";
+import useModalStore from "@/store/modals";
+import CommentsList from "../../Comments/partials/commentsList";
+
 interface Params {
   data: Post;
 }
 
 const PostSection = ({ data }: Params) => {
   const userId = useUserStore((state) => state.id);
+  const modal = useModalStore((state) => state);
   const [isEditing, setIsEditing] = useState(false);
 
   const invalidPostCache = () => {
@@ -80,7 +84,11 @@ const PostSection = ({ data }: Params) => {
         )}
       </div>
       <div className="flex justify-between">
-        <InfoIcon icon={<Chat size={16} />} text={data.comments} />
+        <InfoIcon
+          icon={<Chat size={16} />}
+          text={data.comments}
+          handleClick={() => modal.toggle("post-comments")}
+        />
         <InfoIcon icon={<ArrowsClockwise size={16} />} text={data.reposts} />
         <InfoIcon
           icon={<Heart size={16} />}
@@ -91,6 +99,10 @@ const PostSection = ({ data }: Params) => {
         <InfoIcon icon={<BookmarkSimple size={16} />} />
         <InfoIcon icon={<ShareNetwork size={16} />} />
       </div>
+
+      <Modal modalName={"post-comments"} isOpen={modal.pages["post-comments"]}>
+        <CommentsList postId={data.id} />
+      </Modal>
     </div>
   );
 };
