@@ -32,6 +32,20 @@
 $ pnpm install
 ```
 
+## Docker-compose
+
+```bash
+$ docker compose -f "backend/src/settings/docker/docker-compose.yml" up -d --build
+```
+
+## Prepare backend
+
+```bash
+$ npx prisma generate
+$ npx prisma migrate dev
+$ npm run prisma:seed
+```
+
 ## Running the app
 
 ```bash
